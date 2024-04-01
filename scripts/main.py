@@ -21,7 +21,7 @@ demo = gr.Interface(
     fn=detect,
     inputs=["file", "image"],
     outputs=["image"],
-    title="Brightest Bio disease detection test."
+    title="Brightest Bio disease detection test"
 )
 
 
