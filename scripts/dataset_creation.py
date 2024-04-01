@@ -5,7 +5,7 @@ import random
 # creates a bunch of images and labels them for yolov8 training, there way no way I was going to manually label every training image, I love python.
 def create_training_images(training_types):
     for index, training_type in enumerate(training_types):
-        for i in range(0, 5):
+        for i in range(0, 300):
             filename = str(i)+"_"+training_type["name"].replace(" ", "_")
             image, bbox_center_x, bbox_center_y, bbox_width, bbox_height = create_dataset_image(training_type["color"])
             image.save("./training_data/images/"+filename+".jpeg")

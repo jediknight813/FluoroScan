@@ -1,20 +1,29 @@
+import gradio as gr
 from ultralytics import YOLO
 
-# model = YOLO("yolov8n.yaml")
-# model = YOLO("yolov8n.pt")
 
-# model.train(data="./config.yaml", epochs=1)
-# metrics = model.val()
-# results = model("https://ultralytics.com/images/bus.jpg")
-# path = model.export(format="onnx")
+# a simple gradio app to test out the model once it's finished training.s
+def detect(modelFile, testImage):
+    model = YOLO(modelFile)
+    results = model([testImage])
+
+    for result in results:
+        boxes = result.boxes
+        masks = result.masks
+        keypoints = result.keypoints
+        probs = result.probs
+        result.save(filename='result.jpg')
+
+    return "./result.jpg"
 
 
-# from ultralytics import YOLO
+demo = gr.Interface(
+    fn=detect,
+    inputs=["file", "image"],
+    outputs=["image"],
+    title="Brightest Bio disease detection test."
+)
 
-# Load a model
-model = YOLO('./best.pt')
-results = model(['./training_data/images/1_Alzheimers_Disease.jpeg', './training_data/images/3_Lung_Cancer.jpeg'])
 
-# Process results list
-for result in results:
-    print(result)
+if __name__ == "__main__":
+    demo.launch(server_name='0.0.0.0', server_port=7860)
